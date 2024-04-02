@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-import './dices_widget.dart';
+import './dice_widget.dart';
 
 class MainPage extends StatelessWidget {
+  final _leftDice = const DiceWidget();
+  final _rightDice = const DiceWidget();
+
   const MainPage({super.key});
 
   @override
@@ -14,8 +17,24 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Rolando Dados'),
       ),
-      body: const Center(
-        child: DicesWidget(),
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          // rool dices
+        },
+        child: Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: _leftDice,
+              ),
+              Expanded(
+                child: _rightDice,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
