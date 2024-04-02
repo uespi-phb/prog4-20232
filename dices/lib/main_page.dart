@@ -1,19 +1,24 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final _rnd = Random();
+
   int _leftDice = 1;
   int _rightDice = 4;
 
-  MainPage({super.key});
-
   void _rollDices() {
-    _leftDice = _rnd.nextInt(6) + 1;
-    _rightDice = _rnd.nextInt(6) + 1;
-
-    debugPrint('left : $_leftDice');
-    debugPrint('right: $_rightDice');
+    setState(() {
+      _leftDice = _rnd.nextInt(6) + 1;
+      _rightDice = _rnd.nextInt(6) + 1;
+    });
   }
 
   @override
