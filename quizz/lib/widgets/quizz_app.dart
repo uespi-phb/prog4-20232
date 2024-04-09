@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../pages/main_page.dart';
 
 class QuizzApp extends StatelessWidget {

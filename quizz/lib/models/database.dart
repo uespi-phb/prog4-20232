@@ -11,6 +11,7 @@ class Database {
         Option(text: 'Cairo', correct: true),
         Option(text: 'Luanda', correct: false),
         Option(text: 'Argel', correct: false),
+        Option(text: 'Naróbi', correct: false),
       ],
     ),
     Question(
@@ -21,6 +22,8 @@ class Database {
         Option(text: 'Ré sustenido', correct: true),
         Option(text: 'Sol bemol', correct: false),
         Option(text: 'Si bemol', correct: false),
+        Option(text: 'Ré bemol', correct: false),
+        Option(text: 'Lá sustenido', correct: false),
       ],
     ),
     Question(
@@ -61,6 +64,7 @@ class Database {
         Option(text: 'Butão', correct: false),
         Option(text: 'Portugal', correct: false),
         Option(text: 'México', correct: false),
+        Option(text: 'Turquia', correct: false),
       ],
     ),
   ];
