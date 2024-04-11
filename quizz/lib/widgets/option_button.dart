@@ -4,24 +4,26 @@ import '../models/option.dart';
 
 typedef OnOptionSelected = void Function(Option option);
 
-class AnswerButton extends StatelessWidget {
+class OptionButton extends StatelessWidget {
   final Option option;
   final OnOptionSelected onSelected;
+  final Color? color;
 
-  const AnswerButton({
+  const OptionButton({
     super.key,
     required this.option,
     required this.onSelected,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 6.0,
-        horizontal: 30.0,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(color),
+        ),
         onPressed: () {
           onSelected(option);
         },
