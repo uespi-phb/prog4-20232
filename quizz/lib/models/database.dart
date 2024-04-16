@@ -1,8 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'option.dart';
 import 'question.dart';
 
 class Database {
-  static const questions = [
+  static var questions = [
     Question(
       score: 5,
       text: 'Qual a capital do Egito?',
@@ -68,4 +70,16 @@ class Database {
       ],
     ),
   ];
+
+  static void shuffleData(
+      {bool shuffleQuestions = true, bool shuffleOptions = true}) {
+    if (shuffleQuestions) {
+      questions.shuffle();
+    }
+    if (shuffleOptions) {
+      for (var question in questions) {
+        question.options.shuffle();
+      }
+    }
+  }
 }

@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/pages/main_page.dart';
+import 'package:quizz/types/types.dart';
+
+import '../models/quizz_result.dart';
 
 class ResultWidget extends StatelessWidget {
-  const ResultWidget({super.key});
+  final QuizzResult result;
+  final OnButtonPressed onButtonPressed;
+
+  const ResultWidget({
+    super.key,
+    required this.result,
+    required this.onButtonPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(
-      fontSize: 32.0,
+      fontSize: 28.0,
       fontWeight: FontWeight.bold,
     );
 
@@ -23,13 +34,13 @@ class ResultWidget extends StatelessWidget {
           Expanded(
             child: Text(
               'Pontuação',
-              style: textStyle.copyWith(fontSize: 40.0),
+              style: textStyle.copyWith(fontSize: 32.0),
               textAlign: TextAlign.center,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              '9/9',
+              '${result.playerScore} / ${result.totalScore} (${result.playerPercentScoreAsText})',
               style: textStyle,
               textAlign: TextAlign.center,
             ),
@@ -37,19 +48,21 @@ class ResultWidget extends StatelessWidget {
           Expanded(
             child: Text(
               'Classificação',
-              style: textStyle.copyWith(fontSize: 40.0),
+              style: textStyle.copyWith(fontSize: 32.0),
               textAlign: TextAlign.center,
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              'BRONZE',
+              result.rakingAsText.toUpperCase(),
               style: textStyle,
               textAlign: TextAlign.center,
             ),
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              onButtonPressed(null, QuizzAction.restart);
+            },
             child: const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(

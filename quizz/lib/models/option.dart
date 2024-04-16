@@ -6,4 +6,7 @@ class Option {
     required this.text,
     this.correct = false,
   });
+
+  @override
+  String toString() => text;
 }

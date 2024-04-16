@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../models/database.dart';
 import '../pages/main_page.dart';
 
 class QuizzApp extends StatelessWidget {
-  const QuizzApp({super.key});
+  QuizzApp({super.key}) {
+    Database.shuffleData();
+  }
 
   @override
   Widget build(BuildContext context) {
