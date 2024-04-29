@@ -4,11 +4,13 @@ import 'package:jokenpo/models/jokenpo_object.dart';
 class RoundedButton extends StatelessWidget {
   final JokenpoObject object;
   final VoidCallback onPressed;
+  final bool selected;
 
   const RoundedButton({
     super.key,
     required this.object,
     required this.onPressed,
+    required this.selected,
   });
 
   String get objectAssetName {
@@ -40,9 +42,13 @@ class RoundedButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: CircleAvatar(
-        minRadius: 40.0,
-        maxRadius: 40.0,
-        child: Image.asset(objectAssetName),
+        backgroundColor: selected ? Colors.red : Colors.white,
+        radius: 40.0,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          radius: 36.0,
+          child: Image.asset(objectAssetName),
+        ),
       ),
     );
   }

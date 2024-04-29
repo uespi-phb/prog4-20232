@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:jokenpo/domain/jokenpo.dart';
 import 'package:jokenpo/models/jokenpo_object.dart';
 
 import '../widgets/rounded_button.dart';
@@ -30,7 +31,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final message = playerChoice != JokenpoObject.none ? playerChoice.name : '';
+    final jokenpo = Jokenpo(
+      player1Object: computerChoice,
+      player2Object: playerChoice,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -47,8 +51,9 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           RoundedButton(
-            object: JokenpoObject.none,
+            object: computerChoice,
             onPressed: () {},
+            selected: false,
           ),
           const Padding(
             padding: EdgeInsets.all(18.0),
@@ -63,23 +68,30 @@ class _MainPageState extends State<MainPage> {
               RoundedButton(
                 object: JokenpoObject.stone,
                 onPressed: () => _onChoice(JokenpoObject.stone),
+                selected: playerChoice == JokenpoObject.stone,
               ),
               RoundedButton(
                 object: JokenpoObject.paper,
                 onPressed: () => _onChoice(JokenpoObject.paper),
+                selected: playerChoice == JokenpoObject.paper,
               ),
               RoundedButton(
                 object: JokenpoObject.scisors,
                 onPressed: () => _onChoice(JokenpoObject.scisors),
+                selected: playerChoice == JokenpoObject.scisors,
               )
             ],
           ),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Text(
-              message,
+              jokenpo.winnerText,
               style: AppStyles.title,
             ),
+          ),
+          Text(
+            jokenpo.winnerReason,
+            style: AppStyles.title,
           ),
         ],
       ),
