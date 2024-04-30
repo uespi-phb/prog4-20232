@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:jokenpo/domain/jokenpo.dart';
-import 'package:jokenpo/models/jokenpo_object.dart';
+import 'package:jokenpo/domain/jokenpo_object.dart';
 
 import '../widgets/rounded_button.dart';
 import '../themes/styles.dart';
@@ -17,8 +17,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final rnd = Random();
 
-  JokenpoObject computerChoice = JokenpoObject.none;
-  JokenpoObject playerChoice = JokenpoObject.none;
+  JokenpoObject? computerChoice;
+  JokenpoObject? playerChoice;
 
   void _onChoice(JokenpoObject object) {
     final index = rnd.nextInt(JokenpoObject.values.length - 1);
@@ -31,10 +31,20 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final jokenpo = Jokenpo(
-      player1Object: computerChoice,
-      player2Object: playerChoice,
-    );
+    String winnerText;
+    String reasonText;
+
+    if ((computerChoice != null) && (playerChoice != null)) {
+      final jokenpo = Jokenpo(
+        player1Object: computerChoice!,
+        player2Object: playerChoice!,
+      );
+      winnerText = jokenpo.winnerText;
+      reasonText = jokenpo.reasonText;
+    } else {
+      winnerText = '';
+      reasonText = '';
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -85,12 +95,12 @@ class _MainPageState extends State<MainPage> {
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Text(
-              jokenpo.winnerText,
+              winnerText,
               style: AppStyles.title,
             ),
           ),
           Text(
-            jokenpo.winnerReason,
+            reasonText,
             style: AppStyles.title,
           ),
         ],
