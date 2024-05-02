@@ -34,18 +34,20 @@ class _MainPageState extends State<MainPage> {
     JokenpoObject? object,
   ) {
     if (computerChoice != null && playerChoice != null) {
-      if (player == JokenpoPlayer.player1) {
+      if (player == JokenpoPlayer.computer) {
         return (computerChoice! > playerChoice!)
             ? AppTheme.winnerColor
-            : AppTheme.looserColor;
+            : (computerChoice != playerChoice)
+                ? AppTheme.looserColor
+                : AppTheme.drawColor;
       }
-      if (player == JokenpoPlayer.player2) {
+      if (player == JokenpoPlayer.human) {
         if (playerChoice == object) {
-          if (playerChoice! > computerChoice!) {
-            return AppTheme.winnerColor;
-          } else {
-            return AppTheme.looserColor;
-          }
+          return (playerChoice! > computerChoice!)
+              ? AppTheme.winnerColor
+              : (computerChoice != playerChoice)
+                  ? AppTheme.looserColor
+                  : AppTheme.drawColor;
         }
       }
     }
@@ -55,7 +57,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    JokenpoPlayer? winner;
     String winnerText;
     String reasonText;
 
@@ -64,11 +65,9 @@ class _MainPageState extends State<MainPage> {
         player1Object: computerChoice!,
         player2Object: playerChoice!,
       );
-      winner = jokenpo.winner;
       winnerText = jokenpo.winnerText;
       reasonText = jokenpo.reasonText;
     } else {
-      winner = null;
       winnerText = '';
       reasonText = '';
     }
@@ -90,7 +89,7 @@ class _MainPageState extends State<MainPage> {
           RoundedButton(
             object: computerChoice,
             onPressed: () {},
-            ringColor: getRingColor(JokenpoPlayer.player1, computerChoice),
+            ringColor: getRingColor(JokenpoPlayer.computer, computerChoice),
           ),
           const Padding(
             padding: EdgeInsets.all(18.0),
@@ -106,19 +105,19 @@ class _MainPageState extends State<MainPage> {
                 object: JokenpoObject.stone,
                 onPressed: () => _onChoice(JokenpoObject.stone),
                 ringColor:
-                    getRingColor(JokenpoPlayer.player2, JokenpoObject.stone),
+                    getRingColor(JokenpoPlayer.human, JokenpoObject.stone),
               ),
               RoundedButton(
                 object: JokenpoObject.paper,
                 onPressed: () => _onChoice(JokenpoObject.paper),
                 ringColor:
-                    getRingColor(JokenpoPlayer.player2, JokenpoObject.paper),
+                    getRingColor(JokenpoPlayer.human, JokenpoObject.paper),
               ),
               RoundedButton(
                 object: JokenpoObject.scisors,
                 onPressed: () => _onChoice(JokenpoObject.scisors),
                 ringColor:
-                    getRingColor(JokenpoPlayer.player2, JokenpoObject.scisors),
+                    getRingColor(JokenpoPlayer.human, JokenpoObject.scisors),
               )
             ],
           ),

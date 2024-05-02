@@ -7,4 +7,5 @@ class AppTheme {
   );
   static const winnerColor = Colors.green;
   static const looserColor = Colors.red;
+  static const drawColor = Colors.blue;
 }

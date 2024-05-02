@@ -1,8 +1,8 @@
 import 'package:jokenpo/domain/jokenpo_object.dart';
 
 enum JokenpoPlayer {
-  player1,
-  player2,
+  computer,
+  human,
 }
 
 class Jokenpo {
@@ -18,9 +18,9 @@ class Jokenpo {
     JokenpoPlayer? result;
 
     if (player1Object > player2Object) {
-      result = JokenpoPlayer.player1;
+      result = JokenpoPlayer.computer;
     } else if (player2Object > player1Object) {
-      result = JokenpoPlayer.player2;
+      result = JokenpoPlayer.human;
     } else {
       result = null;
     }
@@ -30,10 +30,10 @@ class Jokenpo {
 
   String get winnerText {
     switch (winner) {
-      case JokenpoPlayer.player1:
+      case JokenpoPlayer.computer:
         return 'O computador venceu';
 
-      case JokenpoPlayer.player2:
+      case JokenpoPlayer.human:
         return 'Você venceu';
 
       default:
