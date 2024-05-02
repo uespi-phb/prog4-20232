@@ -4,13 +4,13 @@ import 'package:jokenpo/domain/jokenpo_object.dart';
 class RoundedButton extends StatelessWidget {
   final JokenpoObject? object;
   final VoidCallback onPressed;
-  final bool selected;
+  final Color? ringColor;
 
   const RoundedButton({
     super.key,
     this.object,
     required this.onPressed,
-    required this.selected,
+    this.ringColor,
   });
 
   @override
@@ -20,7 +20,7 @@ class RoundedButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: CircleAvatar(
-        backgroundColor: selected ? Colors.red : Colors.white,
+        backgroundColor: ringColor ?? Colors.white,
         radius: 40.0,
         child: CircleAvatar(
           backgroundColor: Colors.white,

@@ -29,8 +29,33 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  Color? getRingColor(
+    JokenpoPlayer player,
+    JokenpoObject? object,
+  ) {
+    if (computerChoice != null && playerChoice != null) {
+      if (player == JokenpoPlayer.player1) {
+        return (computerChoice! > playerChoice!)
+            ? AppTheme.winnerColor
+            : AppTheme.looserColor;
+      }
+      if (player == JokenpoPlayer.player2) {
+        if (playerChoice == object) {
+          if (playerChoice! > computerChoice!) {
+            return AppTheme.winnerColor;
+          } else {
+            return AppTheme.looserColor;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    JokenpoPlayer? winner;
     String winnerText;
     String reasonText;
 
@@ -39,9 +64,11 @@ class _MainPageState extends State<MainPage> {
         player1Object: computerChoice!,
         player2Object: playerChoice!,
       );
+      winner = jokenpo.winner;
       winnerText = jokenpo.winnerText;
       reasonText = jokenpo.reasonText;
     } else {
+      winner = null;
       winnerText = '';
       reasonText = '';
     }
@@ -57,19 +84,19 @@ class _MainPageState extends State<MainPage> {
             padding: EdgeInsets.all(18.0),
             child: Text(
               'Escolha do App',
-              style: AppStyles.title,
+              style: AppTheme.titleStyle,
             ),
           ),
           RoundedButton(
             object: computerChoice,
             onPressed: () {},
-            selected: false,
+            ringColor: getRingColor(JokenpoPlayer.player1, computerChoice),
           ),
           const Padding(
             padding: EdgeInsets.all(18.0),
             child: Text(
               'Sua Escolha',
-              style: AppStyles.title,
+              style: AppTheme.titleStyle,
             ),
           ),
           Row(
@@ -78,17 +105,20 @@ class _MainPageState extends State<MainPage> {
               RoundedButton(
                 object: JokenpoObject.stone,
                 onPressed: () => _onChoice(JokenpoObject.stone),
-                selected: playerChoice == JokenpoObject.stone,
+                ringColor:
+                    getRingColor(JokenpoPlayer.player2, JokenpoObject.stone),
               ),
               RoundedButton(
                 object: JokenpoObject.paper,
                 onPressed: () => _onChoice(JokenpoObject.paper),
-                selected: playerChoice == JokenpoObject.paper,
+                ringColor:
+                    getRingColor(JokenpoPlayer.player2, JokenpoObject.paper),
               ),
               RoundedButton(
                 object: JokenpoObject.scisors,
                 onPressed: () => _onChoice(JokenpoObject.scisors),
-                selected: playerChoice == JokenpoObject.scisors,
+                ringColor:
+                    getRingColor(JokenpoPlayer.player2, JokenpoObject.scisors),
               )
             ],
           ),
@@ -96,12 +126,12 @@ class _MainPageState extends State<MainPage> {
             padding: const EdgeInsets.all(18.0),
             child: Text(
               winnerText,
-              style: AppStyles.title,
+              style: AppTheme.titleStyle,
             ),
           ),
           Text(
             reasonText,
-            style: AppStyles.title,
+            style: AppTheme.titleStyle,
           ),
         ],
       ),

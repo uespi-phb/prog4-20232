@@ -1,7 +1,6 @@
 import 'package:jokenpo/domain/jokenpo_object.dart';
 
-enum JokenpoWinner {
-  draw,
+enum JokenpoPlayer {
   player1,
   player2,
 }
@@ -15,15 +14,15 @@ class Jokenpo {
     required this.player2Object,
   });
 
-  JokenpoWinner get winner {
-    JokenpoWinner result = JokenpoWinner.draw;
+  JokenpoPlayer? get winner {
+    JokenpoPlayer? result;
 
     if (player1Object > player2Object) {
-      result = JokenpoWinner.player1;
+      result = JokenpoPlayer.player1;
     } else if (player2Object > player1Object) {
-      result = JokenpoWinner.player2;
+      result = JokenpoPlayer.player2;
     } else {
-      result = JokenpoWinner.draw;
+      result = null;
     }
 
     return result;
@@ -31,10 +30,10 @@ class Jokenpo {
 
   String get winnerText {
     switch (winner) {
-      case JokenpoWinner.player1:
+      case JokenpoPlayer.player1:
         return 'O computador venceu';
 
-      case JokenpoWinner.player2:
+      case JokenpoPlayer.player2:
         return 'Você venceu';
 
       default:
@@ -44,9 +43,9 @@ class Jokenpo {
 
   String get reasonText {
     if (player1Object > player2Object) {
-      return '$player1Object ${player1Object.reason} $player2Object';
+      return '$player1Object ${player1Object.power} $player2Object';
     } else if (player2Object > player1Object) {
-      return '$player2Object ${player2Object.reason} $player1Object';
+      return '$player2Object ${player2Object.power} $player1Object';
     } else {
       return '';
     }

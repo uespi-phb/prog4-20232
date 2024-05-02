@@ -3,9 +3,9 @@ enum JokenpoObject implements Comparable<JokenpoObject> {
   paper('envolve'),
   scisors('corta');
 
-  const JokenpoObject(this.reason);
+  const JokenpoObject(this.power);
 
-  final String reason;
+  final String power;
 
   @override
   String toString() {
