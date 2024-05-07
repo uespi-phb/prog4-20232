@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/category.dart';
+import '../data/database.dart';
 import '../widgets/category_card.dart';
 
 class MainPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -22,8 +22,9 @@ class MainPage extends StatelessWidget {
             crossAxisSpacing: 20.0,
             childAspectRatio: 3 / 2,
           ),
-          children:
-              kCategories.map((category) => CategoryCard(category)).toList(),
+          children: Database.categories
+              .map((category) => CategoryCard(category))
+              .toList(),
         ),
       ),
     );
