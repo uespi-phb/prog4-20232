@@ -14,7 +14,7 @@ class CategoryMealsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final meals = Database.mealsByCategory(category.id).toList();
+    final meals = Database.mealsByCategory(category.id);
 
     return Scaffold(
       appBar: AppBar(
@@ -22,9 +22,9 @@ class CategoryMealsPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: ListView.builder(
-//        padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero,
         itemCount: meals.length,
-        itemBuilder: (_, index) => MealCard(meals[index]),
+        itemBuilder: (_, index) => MealCard(meals.elementAt(index)),
       ),
     );
   }

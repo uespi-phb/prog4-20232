@@ -14,8 +14,8 @@ enum Cost {
   fair('Normal'),
   expensive('Caro');
 
-  final String string;
   const Cost(this.string);
+  final String string;
 }
 
 class Meal {
