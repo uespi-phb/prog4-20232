@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:meals/pages/category_meals_page.dart';
 
-import '../models/category.dart';
+import '../models/meal.dart';
 import './app_routes.dart';
+import '../pages/category_meals_page.dart';
+import '../pages/meal_detail_page.dart';
+import '../models/category.dart';
 import '../pages/main_page.dart';
 
 class MealsApp extends StatelessWidget {
   const MealsApp({super.key});
+
+  Widget _buildMainPage(BuildContext context) {
+    return const MainPage();
+  }
+
+  Widget _buildCategoryMeals(BuildContext context) {
+    final category = ModalRoute.of(context)?.settings.arguments as Category;
+    return CategoryMealsPage(category);
+  }
+
+  Widget _buildMealDetailPage(BuildContext context) {
+    final meal = ModalRoute.of(context)?.settings.arguments as Meal;
+    return MealDetailPage(meal);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +42,9 @@ class MealsApp extends StatelessWidget {
       ),
       initialRoute: AppRoutes.root,
       routes: {
-        AppRoutes.root: (context) => const MainPage(),
-        AppRoutes.categoryMeals: (context) {
-          final category =
-              ModalRoute.of(context)?.settings.arguments as Category;
-          return CategoryMealsPage(category);
-        }
+        AppRoutes.root: _buildMainPage,
+        AppRoutes.categoryMeals: _buildCategoryMeals,
+        AppRoutes.mealDetail: _buildMealDetailPage,
       },
     );
   }
