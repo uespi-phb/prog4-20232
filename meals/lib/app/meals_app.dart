@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../models/meal.dart';
 import './app_routes.dart';
+import '../models/meal.dart';
+import '../providers/meals_provider.dart';
 import '../pages/category_meals_page.dart';
 import '../pages/meal_detail_page.dart';
 import '../models/category.dart';
@@ -26,26 +28,29 @@ class MealsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.pink,
-        brightness: Brightness.light,
-        canvasColor: const Color.fromRGBO(255, 254, 229, 1.0),
-        fontFamily: 'Raleway',
-        textTheme: ThemeData.light().textTheme.copyWith(
-              titleLarge: const TextStyle(
-                fontSize: 20.0,
-                fontFamily: 'RobotoCondensed',
+    return ChangeNotifierProvider(
+      create: (_) => MealsProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorSchemeSeed: Colors.pink,
+          brightness: Brightness.light,
+          canvasColor: const Color.fromRGBO(255, 254, 229, 1.0),
+          fontFamily: 'Raleway',
+          textTheme: ThemeData.light().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: 'RobotoCondensed',
+                ),
               ),
-            ),
+        ),
+        initialRoute: AppRoutes.root,
+        routes: {
+          AppRoutes.root: _buildMainPage,
+          AppRoutes.categoryMeals: _buildCategoryMeals,
+          AppRoutes.mealDetail: _buildMealDetailPage,
+        },
       ),
-      initialRoute: AppRoutes.root,
-      routes: {
-        AppRoutes.root: _buildMainPage,
-        AppRoutes.categoryMeals: _buildCategoryMeals,
-        AppRoutes.mealDetail: _buildMealDetailPage,
-      },
     );
   }
 }

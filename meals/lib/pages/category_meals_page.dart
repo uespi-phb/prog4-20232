@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../data/database.dart';
 import '../models/category.dart';
+import '../providers/meals_provider.dart';
 import '../widgets/meal_card.dart';
 
 class CategoryMealsPage extends StatelessWidget {
@@ -14,7 +15,10 @@ class CategoryMealsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final meals = Database.mealsByCategory(category.id);
+    final meals = Provider.of<MealsProvider>(
+      context,
+      listen: false,
+    ).meals;
 
     return Scaffold(
       appBar: AppBar(

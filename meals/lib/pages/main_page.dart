@@ -1,6 +1,7 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../data/database.dart';
+import '../providers/meals_provider.dart';
 import '../widgets/category_card.dart';
 
 class MainPage extends StatelessWidget {
@@ -8,6 +9,11 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mealsProvider = Provider.of<MealsProvider>(
+      context,
+      listen: false,
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
@@ -22,7 +28,7 @@ class MainPage extends StatelessWidget {
             crossAxisSpacing: 20.0,
             childAspectRatio: 3 / 2,
           ),
-          children: Database.categories
+          children: mealsProvider.categories
               .map((category) => CategoryCard(category))
               .toList(),
         ),
