@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../pages/settings_page.dart';
 import './app_routes.dart';
 import '../models/meal.dart';
 import '../providers/meals_provider.dart';
@@ -26,6 +27,10 @@ class MealsApp extends StatelessWidget {
     return MealDetailPage(meal);
   }
 
+  Widget _buildSettingsPage(BuildContext context) {
+    return const SettingsPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -49,6 +54,7 @@ class MealsApp extends StatelessWidget {
           AppRoutes.root: _buildMainPage,
           AppRoutes.categoryMeals: _buildCategoryMeals,
           AppRoutes.mealDetail: _buildMealDetailPage,
+          AppRoutes.settings: _buildSettingsPage,
         },
       ),
     );

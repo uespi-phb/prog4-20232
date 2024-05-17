@@ -58,6 +58,7 @@ final kMeals = <Meal>[
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: false,
+    isFavorite: true,
   ),
   Meal(
     id: 3,
@@ -120,6 +121,7 @@ final kMeals = <Meal>[
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: false,
+    isFavorite: true,
   ),
   Meal(
     id: 5,
@@ -245,6 +247,7 @@ final kMeals = <Meal>[
     isVegan: false,
     isVegetarian: false,
     isLactoseFree: true,
+    isFavorite: true,
   ),
   Meal(
     id: 9,
@@ -292,6 +295,7 @@ final kMeals = <Meal>[
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: false,
+    isFavorite: true,
   ),
   Meal(
     id: 0,

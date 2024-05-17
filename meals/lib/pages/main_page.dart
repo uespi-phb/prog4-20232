@@ -1,37 +1,55 @@
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../providers/meals_provider.dart';
-import '../widgets/category_card.dart';
+import '../widgets/app_drawer.dart';
+import '../widgets/categories_widget.dart';
+import '../widgets/favorites_widget.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final mealsProvider = Provider.of<MealsProvider>(
-      context,
-      listen: false,
-    );
+  State<MainPage> createState() => _MainPageState();
+}
 
+enum MealsPage {
+  categories,
+  favorites,
+}
+
+class _MainPageState extends State<MainPage> {
+  MealsPage _mealsPage = MealsPage.categories;
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Categorias'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: GridView(
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200.0,
-            mainAxisSpacing: 20.0,
-            crossAxisSpacing: 20.0,
-            childAspectRatio: 3 / 2,
+      drawer: const AppDrawer(),
+      // body: CategoriesWidget(mealsProvider: mealsProvider),
+      body: (_mealsPage == MealsPage.categories)
+          ? const CategoriesWidget()
+          : const FavoritesWidget(),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        selectedItemColor: Colors.white,
+        currentIndex: _mealsPage.index,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categorias',
           ),
-          children: mealsProvider.categories
-              .map((category) => CategoryCard(category))
-              .toList(),
-        ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favoritos',
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            _mealsPage = MealsPage.values[index];
+          });
+        },
       ),
     );
   }
