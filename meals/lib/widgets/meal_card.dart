@@ -13,6 +13,8 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(meal.title);
+
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
@@ -40,6 +42,7 @@ class MealCard extends StatelessWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
+                  // child: SizedBox(height: 200.0, child: Placeholder()),
                 ),
                 Positioned(
                   right: 4.0,

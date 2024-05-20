@@ -18,7 +18,7 @@ class CategoryMealsPage extends StatelessWidget {
     final meals = Provider.of<MealsProvider>(
       context,
       listen: false,
-    ).meals;
+    ).filteredMeals;
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +28,10 @@ class CategoryMealsPage extends StatelessWidget {
       body: ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: meals.length,
-        itemBuilder: (_, index) => MealCard(meals.elementAt(index)),
+        itemBuilder: (_, index) {
+          debugPrint('$index/${meals.length}');
+          return MealCard(meals.elementAt(index));
+        },
       ),
     );
   }

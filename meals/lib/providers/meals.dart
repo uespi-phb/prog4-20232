@@ -256,7 +256,7 @@ final kMeals = <Meal>[
     cost: Cost.cheap,
     complexity: Complexity.difficult,
     imageUrl:
-        'https://cdn.pixabay.com/photo/214/8/7/21/7/souffle-412785_1280.jpg',
+        'https://www.receitasnestle.com.br/sites/default/files/srh_recipes/7b5c7c8d4088f5a656e40a687b181784.jpg',
     duration: 45,
     ingredients: [
       '1 colher de chá de manteiga derretida',
@@ -295,7 +295,7 @@ final kMeals = <Meal>[
     isVegan: false,
     isVegetarian: true,
     isLactoseFree: false,
-    isFavorite: true,
+    isFavorite: false,
   ),
   Meal(
     id: 0,
@@ -326,5 +326,6 @@ final kMeals = <Meal>[
     isVegan: true,
     isVegetarian: true,
     isLactoseFree: true,
+    isFavorite: true,
   ),
 ];
