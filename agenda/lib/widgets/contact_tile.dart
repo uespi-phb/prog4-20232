@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../app/app_asset.dart';
 import '../models/contact.dart';
@@ -14,11 +13,13 @@ class ContactTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final image = contact.imageUrl != null
+        ? Image.network(contact.imageUrl!)
+        : Image.asset(AppImage.person.path);
+
     return ListTile(
-      leading: SvgPicture.asset(
-        AppImage.person.path,
-        semanticsLabel: contact.name,
-      ),
+      // leading: Image.asset(AppImage.person.path),
+      leading: image,
       title: Text(contact.name,
           style: const TextStyle(
             fontWeight: FontWeight.bold,

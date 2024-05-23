@@ -22,7 +22,7 @@ class AgendaApp extends StatelessWidget {
         initialRoute: AppRoute.home.route,
         routes: {
           AppRoute.home.route: (_) => const HomePage(),
-          AppRoute.newContact.route: (_) => const NewContactPage(),
+          AppRoute.newContact.route: (_) => NewContactPage(),
         },
       ),
     );

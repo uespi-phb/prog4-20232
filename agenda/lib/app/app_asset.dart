@@ -1,5 +1,5 @@
 enum AppImage {
-  person('assets/images/contact.svg');
+  person('assets/images/contact.png');
 
   const AppImage(this.path);
 
