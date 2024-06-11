@@ -13,10 +13,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final provider = Provider.of<AgendaProvider>(context, listen: false);
+    provider.load().then(
+      (_) {
+        setState(() {
+          _isLoading = false;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final contacts =
-        Provider.of<AgendaProvider>(context, listen: false).contacts;
+        Provider.of<AgendaProvider>(context, listen: true).contacts;
 
     return Scaffold(
       appBar: AppBar(
@@ -30,9 +46,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add),
       ),
-      body: Column(
-        children: contacts.map((contact) => ContactTile(contact)).toList(),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children:
+                  contacts.map((contact) => ContactTile(contact)).toList(),
+            ),
     );
   }
 }

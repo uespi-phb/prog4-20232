@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/app_asset.dart';
+import '../app/app_route.dart';
 import '../models/contact.dart';
 
 class ContactTile extends StatelessWidget {
@@ -18,7 +19,12 @@ class ContactTile extends StatelessWidget {
         : Image.asset(AppImage.person.path);
 
     return ListTile(
-      // leading: Image.asset(AppImage.person.path),
+      onTap: () {
+        Navigator.of(context).pushNamed(
+          AppRoute.editContact.route,
+          arguments: contact,
+        );
+      },
       leading: image,
       title: Text(contact.name,
           style: const TextStyle(

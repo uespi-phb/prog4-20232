@@ -1,6 +1,7 @@
 enum AppRoute {
   home('/'),
-  newContact('/contacts');
+  newContact('/contact/new'),
+  editContact('/contact/edit');
 
   const AppRoute(this.route);
 

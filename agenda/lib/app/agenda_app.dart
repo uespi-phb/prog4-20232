@@ -2,8 +2,9 @@ import 'package:agenda/provider/agenda_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/contact.dart';
 import './app_route.dart';
-import '../pages/new_contact_page.dart';
+import '../pages/contact_page.dart';
 import '../pages/home_page.dart';
 
 class AgendaApp extends StatelessWidget {
@@ -22,7 +23,13 @@ class AgendaApp extends StatelessWidget {
         initialRoute: AppRoute.home.route,
         routes: {
           AppRoute.home.route: (_) => const HomePage(),
-          AppRoute.newContact.route: (_) => NewContactPage(),
+          AppRoute.newContact.route: (_) => const ContactPage(contact: null),
+          AppRoute.editContact.route: (context) {
+            final contact = ModalRoute.of(context)?.settings.arguments;
+            return ContactPage(
+              contact: contact as Contact?,
+            );
+          }
         },
       ),
     );

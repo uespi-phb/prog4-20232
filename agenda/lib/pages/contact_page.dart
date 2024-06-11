@@ -1,27 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../app/app_asset.dart';
+import '../models/contact.dart';
+import '../provider/agenda_provider.dart';
 
-class NewContactPage extends StatelessWidget {
+class ContactPage extends StatefulWidget {
+  final Contact? contact;
+
+  const ContactPage({
+    super.key,
+    this.contact,
+  });
+
+  @override
+  State<ContactPage> createState() => _ContactPageState();
+}
+
+class _ContactPageState extends State<ContactPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
-  NewContactPage({super.key});
+  @override
+  void initState() {
+    final contact = widget.contact;
 
-  void _formValidation() {
+    super.initState();
+
+    _nameController.text = contact?.name ?? '';
+    _emailController.text = contact?.email ?? '';
+    _phoneController.text = contact?.phone ?? '';
+  }
+
+  void _formSubmit(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    // if (contact != null) {
-    //   _contactData['id'] = contact!.id;
-    // }
+    final contact = Contact(
+      id: widget.contact?.id ?? '',
+      name: _nameController.text.trim(),
+      email: _emailController.text.trim(),
+      phone: _phoneController.text.trim(),
+    );
 
-    // _contactData['name'] = _nameController.text.trim();
-    // _contactData['email'] = _emailController.text.trim();
-    // _contactData['phone'] = _phoneController.text.trim();
+    final provider = Provider.of<AgendaProvider>(
+      context,
+      listen: false,
+    );
+
+    provider.save(contact);
+
+    Navigator.of(context).pop();
   }
 
   String? _nameValidator(String? text) {
@@ -63,7 +95,7 @@ class NewContactPage extends StatelessWidget {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _formValidation,
+        onPressed: () => _formSubmit(context),
         child: const Icon(Icons.save),
       ),
       body: Column(
