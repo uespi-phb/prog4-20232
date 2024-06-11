@@ -14,70 +14,56 @@ class AgendaProvider with ChangeNotifier {
 
   List<Contact> get contacts => _contacts;
 
-  Future<void> load() {
-    http
-        .get(
+  Future<void> load() async {
+    final response = await http.get(
       Uri.parse('$_baseUrl/contacts.json'),
-    )
-        .then((response) {
-      final data = jsonDecode(response.body);
-      data.forEach((key, value) {
-        final contact = Contact(
-          id: key,
-          name: value['name'],
-          email: value['email'],
-          phone: value['phone'],
-          imageUrl: value['imageUrl'],
-        );
-        _contacts.add(contact);
-      });
-      notifyListeners();
+    );
+    final data = jsonDecode(response.body);
+    data.forEach((key, value) {
+      final contact = Contact(
+        id: key,
+        name: value['name'],
+        email: value['email'],
+        phone: value['phone'],
+        imageUrl: value['imageUrl'],
+      );
+      _contacts.add(contact);
     });
-
-    return Future(() {});
+    notifyListeners();
   }
 
-  void save(Contact contact) {
+  Future<void> save(Contact contact) {
     if (contact.id.isEmpty) {
-      insert(contact);
+      return insert(contact);
     } else {
-      update(contact);
+      return update(contact);
     }
   }
 
-  void insert(Contact contact) {
-    final future = http.post(
+  Future<void> insert(Contact contact) async {
+    final response = await http.post(
       Uri.parse('$_baseUrl/contacts.json'),
       body: contact.toJson(),
     );
-    future.then(
-      (response) {
-        debugPrint(response.body);
 
-        final body = jsonDecode(response.body);
+    final body = jsonDecode(response.body);
 
-        _contacts.add(contact.copyWith(
-          id: body['name'],
-        ));
-        notifyListeners();
-      },
-    );
+    _contacts.add(contact.copyWith(
+      id: body['name'],
+    ));
+    notifyListeners();
   }
 
-  void update(Contact contact) {
-    final future = http.put(
-      Uri.parse('$_baseUrl/contacts/${contact.id}.json'),
+  Future<void> update(Contact contact) async {
+    await http.put(
+      Uri.parse('$_baseUrl/contacts/${contact.id}'),
       body: contact.toJson(),
     );
 
-    future.then((response) {
-      debugPrint(response.body);
-
-      final index = _contacts.indexWhere((elem) => elem.id == contact.id);
-      if (index >= 0) {
-        _contacts[index] = contact;
-        notifyListeners();
-      }
-    });
+    final index = _contacts.indexWhere((elem) => elem.id == contact.id);
+    if (index >= 0) {
+      _contacts[index] = contact;
+      notifyListeners();
+    }
   }
 }

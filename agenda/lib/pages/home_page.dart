@@ -48,9 +48,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children:
-                  contacts.map((contact) => ContactTile(contact)).toList(),
+          : ListView.builder(
+              itemCount: contacts.length,
+              itemBuilder: (context, index) => ContactTile(contacts[index]),
             ),
     );
   }

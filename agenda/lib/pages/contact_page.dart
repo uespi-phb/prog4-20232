@@ -23,6 +23,8 @@ class _ContactPageState extends State<ContactPage> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  bool _isLoading = false;
+
   @override
   void initState() {
     final contact = widget.contact;
@@ -34,7 +36,7 @@ class _ContactPageState extends State<ContactPage> {
     _phoneController.text = contact?.phone ?? '';
   }
 
-  void _formSubmit(BuildContext context) {
+  void _formSubmit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -50,10 +52,28 @@ class _ContactPageState extends State<ContactPage> {
       context,
       listen: false,
     );
+    final nav = Navigator.of(context);
 
-    provider.save(contact);
-
-    Navigator.of(context).pop();
+    setState(() => _isLoading = true);
+    try {
+      await provider.save(contact);
+      nav.pop();
+    } catch (error) {
+      showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: const Text('Ocoreu um Erro'),
+            content: Text(error.toString()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Fechar'),
+              )
+            ]),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   String? _nameValidator(String? text) {
@@ -98,45 +118,47 @@ class _ContactPageState extends State<ContactPage> {
         onPressed: () => _formSubmit(context),
         child: const Icon(Icons.save),
       ),
-      body: Column(
-        children: [
-          Image.asset(
-            AppImage.person.path,
-            width: 120.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Nome',
+      body: !_isLoading
+          ? Column(
+              children: [
+                Image.asset(
+                  AppImage.person.path,
+                  width: 120.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Nome',
+                          ),
+                          controller: _nameController,
+                          validator: _nameValidator,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'E-mail',
+                          ),
+                          controller: _emailController,
+                          validator: _emailValidator,
+                        ),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            labelText: 'Telefone',
+                          ),
+                          controller: _phoneController,
+                          validator: _phoneValidator,
+                        ),
+                      ],
                     ),
-                    controller: _nameController,
-                    validator: _nameValidator,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'E-mail',
-                    ),
-                    controller: _emailController,
-                    validator: _emailValidator,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: 'Telefone',
-                    ),
-                    controller: _phoneController,
-                    validator: _phoneValidator,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+                ),
+              ],
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
